@@ -7,3 +7,9 @@ const N = 10;
 for (let i = 0; i < N; i++) {
     console.log("Mensaje " + i);
 }
+
+console.log('----------');
+
+for (let i = 1; i < N; i++){
+    console.log('Mensaje ' + i);
+}

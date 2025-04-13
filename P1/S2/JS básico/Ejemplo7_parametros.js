@@ -1,9 +1,9 @@
 //-- Ejemplo de paso de parametros a funciones
 
 //-- Recibe dos parámetros y devuelve su suma
-function suma(x,y) {
+function suma(x, y) {
     //-- devolver la suma
-    return x+y;
+    return x + y;
   }
   
   //-- Recibe un parámetro y lo imprime por la consola

@@ -10,13 +10,13 @@ function mi_funcion1() {
 
 //-- Se define una función y se asigna a una variable
 const mi_funcion2 = function() {
-    console.log("Mi funcion2....");
+    console.log("Mi funcion 2....");
 }
 
 //-- Otra forma de hacer lo anterior, pero con una
 //-- notación abreviada
 const mi_funcion3 = () => {
-    console.log("Mi funcion3....")
+    console.log("Mi funcion 3....")
 }
 
 //-- Definición de funciones dentro de un 
@@ -24,7 +24,7 @@ const mi_funcion3 = () => {
 const a = {
     x : 10,
     f4 : function() {
-        console.log("Mi funcion4!!!");
+        console.log("Mi funcion 4!!!");
     },
     f5: () => {
         console.log("Mi funcion 5!!!");
