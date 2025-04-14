@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
   //-- Enviar una respuesta:. Siempre es la misma respuesta
   //-- Con el método res.write() se escribe el mensaje en el 
   //-- cuerpo de la respuesta
-  res.write("Soy el Happy server!!\n");
+  res.write("Soy el Happy server!!\nBienvenido al servidor");
 
   //-- Terminar la respuesta y enviarla
   res.end();
