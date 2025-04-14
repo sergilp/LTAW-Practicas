@@ -9,6 +9,9 @@ const server = http.createServer((req, res) => {
 
   req.on('data', (cuerpo) => {
     console.log("MENSAJE B")
+    //-- Para que se imprimiese este mensaje tendría que haber cuerpo en la solicitud:
+    //-- Hsciendo una solicitud POST, con GET no se imprimiría
+    //-- console.log("Cuerpo de la solicitud:", cuerpo.toString());
   });
 
   req.on('end', ()=> {
@@ -20,6 +23,8 @@ const server = http.createServer((req, res) => {
     res.end()
   });
 
+
+  //-- Se imprime antes de que 'data' o 'end' se activen
   console.log("MENSAJE D");
 
 });
