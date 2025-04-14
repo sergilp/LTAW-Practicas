@@ -30,5 +30,5 @@ let id = setInterval( () => {
 //-- Al cabo de 3 segundos se desactiva el temporizador
 setTimeout( ()=> {
   clearInterval(id)
-  console.log("Stop!");
+  console.log("Tac!");
 }, 3000);
