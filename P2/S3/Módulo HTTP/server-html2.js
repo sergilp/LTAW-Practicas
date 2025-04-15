@@ -40,7 +40,7 @@ const server = http.createServer((req, res)=>{
 
     //-- Valores de la respuesta por defecto
     let code = 200;
-    let code_msg = "OK";
+    let code_msg = "OK ;-)";
     let page = pagina_main;
 
     //-- Analizar el recurso
