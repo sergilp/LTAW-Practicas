@@ -1,5 +1,4 @@
 //-- Importar módulos
-
 const http = require('http');   //-- Módulo para crear servidores HTTP
 const fs = require('fs');       //-- Módulo para leer archivos
 const path = require('path');   //-- Módulo para rutas de archivos
