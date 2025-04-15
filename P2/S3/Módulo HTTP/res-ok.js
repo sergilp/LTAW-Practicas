@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.statusMessage = "OK :-)";
   res.setHeader('Content-Type', 'text/plain');
-  res.write("Soy el happy server eh o no\n");
+  res.write("Soy el happy server jeje!!\n");
   res.end()
 
 });
