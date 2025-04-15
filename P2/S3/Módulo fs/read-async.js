@@ -11,5 +11,5 @@ const data = fs.readFileSync('fich1.txt','utf8');
 console.log("Lectura completada...")
 
 //-- Mostrar el contenido del fichero
-console.log("El contenido del fichero: \n")
+console.log("El contenido del fichero es: \n")
 console.log(data);
