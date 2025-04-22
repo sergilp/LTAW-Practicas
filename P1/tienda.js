@@ -26,9 +26,13 @@ const server = http.createServer((req, res) => {
     console.log('Petición recibida:', req.url);
 
     //-- Se declara el Content-Type y recurso
-    if (req.url.endsWith('png')) {          //-- Acceso a archivos PNG
+    if (req.url.endsWith('.png')) {          //-- Acceso a archivos PNG
             content_type = 'image/png';
             recurso = './Images/' + req.url.split('/').pop();
-            
+
+    } else if (req.url.endsWith('.css')) {
+        content_type = 'text/css';
+        recurso = './Style/' + req.url.split('/').pop();
     }
+
 })
