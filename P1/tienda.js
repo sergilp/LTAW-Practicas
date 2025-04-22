@@ -6,7 +6,7 @@ const path = require('path');   //-- Módulo para rutas de archivos
 //-- Puerto a utilizar 
 const PORT = 8090;
 
-const pagina_error = fs.readFileSync('./Pages/pagina_error.html','utf8');
+const pagina_error = fs.readFileSync('./Pages/pagina-error.html','utf8');
 
 
 //-- Función para leer archivos
@@ -24,6 +24,9 @@ function leerFichero(fichero, callback) {
 
 const server = http.createServer((req, res) => {
     console.log('Petición recibida:', req.url);
+
+    let content_type;
+    let recurso;
 
     //-- Se declara el Content-Type y recurso
     if (req.url.endsWith('.png')) {          //-- Acceso a archivos PNG
