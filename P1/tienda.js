@@ -29,13 +29,27 @@ const server = http.createServer((req, res) => {
     let recurso;
 
     //-- Se declara el Content-Type y recurso
-    if (req.url.endsWith('.png')) {          //-- Acceso a archivos PNG
+    if (req.url.endsWith('.png')) {             //-- Acceso a archivos PNG
             content_type = 'image/png';
-            recurso = './Images/' + req.url.split('/').pop();
+            recurso = path.join(__dirname, 'Images', path.basename(req.url));
 
-    } else if (req.url.endsWith('.css')) {
+    } else if (req.url.endsWith('.css')) {      //-- Acceso a los archivos CSS
         content_type = 'text/css';
-        recurso = './Style/' + req.url.split('/').pop();
+        recurso = path.join(__dirname, 'Style', path.basename(req.url));
+
+    } else if (req.url.endsWith('.html')) {     //-- Acceso a los archivos HTML
+        content_type = 'text/html';
+        recurso = path.join(__dirname, 'Pages', path.basename(req.url));
+
+    } else if (req.url.endsWith('.js')) {       //-- Acceso a los archivos JS
+        content_type = 'application/javascript';
+        recurso = path.join(__dirname, 'JS', path.basename(req.url));
+
+    } else if (req.url.endsWith('.jpeg') || req.url.endsWith('.jpg')) {     //-- Acceso a los archivos JPEG o JPG
+        content_type = 'image/jpeg';
+        recurso = path.join(__dirname, 'Images', path.basename(req.url));
+
+
     }
 
 })
