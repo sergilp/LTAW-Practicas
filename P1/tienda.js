@@ -49,7 +49,40 @@ const server = http.createServer((req, res) => {
         content_type = 'image/jpeg';
         recurso = path.join(__dirname, 'Images', path.basename(req.url));
 
+    } else if (req.url == '/') {
+        content_type = 'text.html';
+        recurso = path.join(__dirname, 'Pages', 'tienda.html');
 
+    } else {                                    //-- Acceso a cualquier otra ruta
+        content_type = 'text.html';
+        recurso = null;
     }
 
-})
+    if (recurso) {
+        leerFichero(recurso, (err, data) => {
+            if (err) {
+                res.statusCode = 404;
+                res.statusMessage = 'Not Found'
+                res.setHeader('Content-Type', 'text/html');
+                res.write(pagina_error);
+                res.end();
+            } else {
+                res.statusCode = 200;
+                res.statusMessage = "OK";
+                res.setHeader('Content-Type', content_type);
+                res.write(data);
+                res.end();
+            }
+        });
+    } else {
+        res.statusCode = 404;
+        res.statusMessage = "Not Found";
+        res.setHeader('Content-Type', 'text/html');
+        res.write(pagina_error);
+        res.end();
+    }
+});
+
+server.listen(PORT, () => {
+    console.log('Escuchando en el puerto: ' + PORT);
+});
