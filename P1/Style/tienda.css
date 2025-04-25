@@ -1,9 +1,10 @@
+/* Definir la imagen de fondo para toda la página */
 body {
-    background-color: #f0f0f0;
-    text-align: center;
-    font-family: Arial, sans-serif;
-}
-h1 {
-    color: #333;
+    background-image: url('../Images/fondo_tienda.png'); /* Ruta de la imagen de fondo */
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-position: center center; /* Centra la imagen en la página */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    margin: 0;
+    padding: 0;
 }
 
