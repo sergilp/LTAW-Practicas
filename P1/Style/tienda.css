@@ -19,7 +19,6 @@ body {
     padding: 50px 0;
 }
 
-
 .producto {
     background: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
     border-radius: 10px;
@@ -72,4 +71,24 @@ header {
 header h1 span {
     color: white;
     font-size: 48px;
+}
+
+/* Estilo para los enlaces (que parecen botones) */
+a {
+    display: inline-block;
+    text-align: center;
+    background-color: #ff4c4c;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Efecto de hover en los enlaces */
+a:hover {
+    background-color: #e84343;
+    transform: translateY(-5px);
 }
