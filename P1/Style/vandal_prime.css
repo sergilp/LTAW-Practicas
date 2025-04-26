@@ -1,0 +1,91 @@
+/* Fondo general */
+body {
+    background-image: url('../Images/fondo2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Luckiest Guy', cursive;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.producto-detalle {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    border-radius: 10px;
+    margin: 50px auto;
+    padding: 30px;
+    width: 300px;
+    text-align: center;
+}
+
+/* Imagen del producto */
+.producto-detalle img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Selector de diseños */
+#designSelector {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+}
+
+/* Botón de volver */
+.boton-volver {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #ff4c4c;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+/* Botón de volver al pasar el ratón */
+.boton-volver:hover {
+    background-color: #e84343;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+    color: white;
+    font-size: 36px;
+}
+
+/* Contenedor de los botones */
+.botones {
+    display: flex;
+    flex-direction: column; /* Botones en columna */
+    align-items: center; /* Centrar horizontalmente */
+    margin-top: 20px;
+}
+
+/* Estilo para ambos botones */
+.boton {
+    background-color: #ff4c4c; 
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px 0; /* Espacio vertical entre botones */
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+/* Efecto hover (al pasar el ratón) */
+.boton:hover {
+    background-color: #e84343;
+}
