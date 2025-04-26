@@ -1,10 +1,75 @@
-/* Definir la imagen de fondo para toda la página */
+/* Fondo general */
 body {
-    background-image: url('../Images/fondo_tienda.png'); /* Ruta de la imagen de fondo */
-    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
-    background-position: center center; /* Centra la imagen en la página */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-image: url('../Images/fondo1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Luckiest Guy', cursive;
     margin: 0;
     padding: 0;
 }
 
+/* Contenedor principal de productos */
+.productos {
+    display: flex;
+    flex-wrap: wrap; /* Por si hay muchos productos, que bajen en otra fila */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente si quieres, aunque para páginas largas no suele ser necesario */
+    text-align: center;
+    padding: 50px 0;
+}
+
+
+.producto {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    border-radius: 10px;
+    margin: 20px;
+    padding: 20px;
+    width: 200px;
+    transition: transform 0.3s;
+}
+
+/* Imagen del producto */
+.producto img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Título del producto */
+.producto h3 {
+    margin: 10px 0;
+}
+
+/* Botón de compra */
+.producto button {
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Botón al pasar el ratón */
+.producto button:hover {
+    background-color: #e84343;
+}
+
+/* Efecto al pasar el ratón por cada producto */
+.producto:hover {
+    transform: translateY(-10px);
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+header h1 span {
+    color: white;
+    font-size: 48px;
+}
