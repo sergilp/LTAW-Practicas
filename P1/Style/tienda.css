@@ -4,7 +4,7 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    font-family: 'Luckiest Guy', cursive;
+    font-family: "Times New Roman", Times, serif;
     margin: 0;
     padding: 0;
 }
@@ -92,3 +92,28 @@ a:hover {
     background-color: #e84343;
     transform: translateY(-5px);
 }
+
+footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
