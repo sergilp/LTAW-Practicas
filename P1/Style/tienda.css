@@ -14,7 +14,7 @@ body {
     display: flex;
     flex-wrap: wrap; /* Por si hay muchos productos, que bajen en otra fila */
     justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente si quieres, aunque para páginas largas no suele ser necesario */
+    align-items: center; /* Centrar verticalmente */
     text-align: center;
     padding: 50px 0;
 }
