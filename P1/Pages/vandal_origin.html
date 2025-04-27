@@ -4,17 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vandal Origin - The Spike Shop</title>
-  <link rel="stylesheet" href="../Style/producto.css">
+  <link rel="stylesheet" href="../Style/vandal.css">
 </head>
 <body>
+
   <header>
     <h1>Vandal Origin</h1>
-    <a href="tienda.html">Volver a la tienda</a>
   </header>
-  <main>
-    <img src="../Images/Vandal_Origin.png" alt="Vandal Origin">
-    <p>Descripción de la skin, precio, etc...</p>
-    <button>Comprar ahora</button>
+
+  <main class="producto-detalle vandal-origin">
+    <img id="imagen-arma" src="../Images/Vandal_Origin.png" alt="Vandal Origin" class="producto-imagen">
+    
+    <div class="producto-info">
+      <h2>Descripción</h2>
+      <p>La Vandal Origin es una skin que rinde homenaje a los orígenes del juego, con detalles sobrios y un estilo elegante que destaca en cada partida.</p>
+
+      <label for="colorSelect">Elige un estilo:</label>
+      <select id="colorSelect">
+        <option value="Vandal_Origin.png">Original (Estilo clásico)</option>
+        <option value="Vandal_Origin_Verde.png">Verde</option>
+        <option value="Vandal_Origin_Roja.png">Roja</option>
+        <option value="Vandal_Origin_Blanca.png">Blanca</option>
+      </select>
+    
+      <h3>Precio: 2025 Valorant Points</h3>
+    
+      <div class="botones">
+        <a href="vandal_prime.html" class="boton">Comprar</a>
+        <a href="../Pages/tienda.html" class="boton">Volver a la tienda</a>
+      </div>
+    </div>
   </main>
+
+  <script>
+    const select = document.getElementById('colorSelect');
+    const imagen = document.getElementById('imagen-arma');
+    
+    select.addEventListener('change', function() {
+        imagen.src = `../Images/${this.value}`;
+    });
+  </script>
+
 </body>
 </html>

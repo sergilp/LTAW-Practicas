@@ -4,17 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vandal Reaver - The Spike Shop</title>
-  <link rel="stylesheet" href="../Style/producto.css">
+  <link rel="stylesheet" href="../Style/vandal.css">
 </head>
 <body>
+
   <header>
     <h1>Vandal Reaver</h1>
-    <a href="tienda.html">Volver a la tienda</a>
   </header>
-  <main>
-    <img src="../Images/Vandal_Reaver.png" alt="Vandal Reaver">
-    <p>Descripción de la skin, precio, etc...</p>
-    <button>Comprar ahora</button>
+
+  <main class="producto-detalle vandal-reaver">
+    <img id="imagen-arma" src="../Images/Vandal_Reaver.png" alt="Vandal Reaver" class="producto-imagen">
+    
+    <div class="producto-info">
+      <h2>Descripción</h2>
+      <p>La Vandal Reaver presenta un diseño oscuro y místico, con detalles que reflejan poder y agresividad. Perfecta para quienes buscan una skin con temática sobrenatural.</p>
+
+      <label for="colorSelect">Elige un estilo:</label>
+      <select id="colorSelect">
+        <option value="Vandal_Reaver.png">Reaver (Original)</option>
+        <option value="Vandal_Reaver_Negra.png">Negra</option>
+        <option value="Vandal_Reaver_Blanca.png">Blanca</option>
+        <option value="Vandal_Reaver_Roja.png">Roja</option>
+      </select>
+    
+      <h3>Precio: 2025 Valorant Points</h3>
+    
+      <div class="botones">
+        <a href="vandal_prime.html" class="boton">Comprar</a>
+        <a href="../Pages/tienda.html" class="boton">Volver a la tienda</a>
+      </div>
+    </div>
   </main>
+
+  <script>
+    const select = document.getElementById('colorSelect');
+    const imagen = document.getElementById('imagen-arma');
+    
+    select.addEventListener('change', function() {
+        imagen.src = `../Images/${this.value}`;
+    });
+  </script>
+
 </body>
 </html>
