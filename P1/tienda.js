@@ -8,7 +8,6 @@ const PORT = 8001;
 
 const pagina_error = fs.readFileSync('./Pages/pagina_error.html','utf8');
 
-
 //-- Función para leer archivos
 function leerFichero(fichero, callback) {
     fs.readFile(fichero, (err, data) => {
