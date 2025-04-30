@@ -1,8 +1,8 @@
 {
     "productos": [
-      { "id": 1, "nombre": "Teclado", "precio": 45 },
-      { "id": 2, "nombre": "Ratón", "precio": 12.99 },
-      { "id": 3, "nombre": "Monitor", "precio": 240 }
+      { "id": 1, "nombre": "Teclado", "precio": 45, "stock": 5 },
+      { "id": 2, "nombre": "Ratón", "precio": 12.99, "stock": 8 },
+      { "id": 3, "nombre": "Monitor", "precio": 240, "stock": 2 }
     ],
     "usuarios": [
       { "id": 101, "nombre": "Eloy" },

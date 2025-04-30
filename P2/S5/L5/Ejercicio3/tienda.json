@@ -1,0 +1,51 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Teclado",
+      "precio": 45,
+      "stock": 9
+    },
+    {
+      "id": 2,
+      "nombre": "Ratón",
+      "precio": 12.99,
+      "stock": 9
+    },
+    {
+      "id": 3,
+      "nombre": "Monitor",
+      "precio": 240,
+      "stock": 9
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 101,
+      "nombre": "Eloy"
+    },
+    {
+      "id": 102,
+      "nombre": "Lucas"
+    }
+  ],
+  "pedidos": [
+    {
+      "id": 5001,
+      "usuarioId": 101,
+      "productos": [
+        1,
+        3
+      ],
+      "estado": "pendiente"
+    },
+    {
+      "id": 5002,
+      "usuarioId": 102,
+      "productos": [
+        2
+      ],
+      "estado": "enviado"
+    }
+  ]
+}

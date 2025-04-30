@@ -13,7 +13,7 @@ tienda.usuarios.forEach((u, i) => {
 // Mostrar número y detalles de productos
 console.log("\nProductos en la tienda: " + tienda.productos.length);
 tienda.productos.forEach((p, i) => {
-  console.log(`Producto ${i + 1}: ${p.nombre} - ${p.precio}€`);
+  console.log(`Producto ${i + 1}: ${p.nombre} - ${p.precio}€ - Stock: ${p.stock}`);
 });
 
 // Mostrar pedidos pendientes
