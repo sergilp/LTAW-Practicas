@@ -4,7 +4,7 @@
       "id": 1,
       "nombre": "Teclado",
       "precio": 45,
-      "stock": 9
+      "stock": 6
     },
     {
       "id": 2,
@@ -16,7 +16,7 @@
       "id": 3,
       "nombre": "Monitor",
       "precio": 240,
-      "stock": 9
+      "stock": 3
     }
   ],
   "usuarios": [

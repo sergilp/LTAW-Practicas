@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // Leer y parsear el fichero JSON
-const datos = fs.readFileSync('tienda.json', 'utf8');
+const datos = fs.readFileSync('Ej-02-tienda.json', 'utf8');
 const tienda = JSON.parse(datos);
 
 // Mostrar número y nombres de usuarios
