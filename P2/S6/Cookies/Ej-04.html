@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba de Cookie</title>
+</head>
+<body>
+    <h1>Bienvenido</h1>
+    <p>Esta es una página de prueba para ver cookies en el servidor.</p>
+
+    <script>
+        //-- Establece una cookie desde el navegador (solo se hace si aún no existe)
+        if (!document.cookie.includes("usuario")) {
+            document.cookie = "usuario=Eloy; path=/";
+        }
+    </script>
+</body>
+</html>
