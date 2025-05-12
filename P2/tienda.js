@@ -22,7 +22,48 @@ function leerFichero(fichero, callback) {
 const server = http.createServer((req, res) => {
     console.log('Petición recibida:', req.url);
 
-    // ---- Ruta para la búsqueda de productos
+    //-- Ruta para el login
+    if (req.url.startsWith('/login') && req.method === 'GET') {
+        const query = new URLSearchParams(req.url.split('?')[1]);
+        const usuario = query.get('usuario');
+
+        // Verificar si el usuario existe
+        const usuarioExistente = tiendaDB.usuarios.find(u => u.nombre === usuario);
+
+        if (usuarioExistente) {
+            // Redirigir a la página principal con el mensaje de bienvenida
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(`
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Bienvenido - The Spike Shop</title>
+                </head>
+                <body>
+                    <h1>Bienvenido, ${usuario}!</h1>
+                    <p>Estás conectado como ${usuario}.</p>
+                    <a href="/">Ir a la tienda</a>
+                </body>
+                </html>
+            `);
+        } else {
+            // Si el usuario no existe, mostrar un mensaje de error
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            res.end(`
+                <html>
+                    <body>
+                        <h1>Usuario no encontrado</h1>
+                        <a href="/">Volver a intentar</a>
+                    </body>
+                </html>
+            `);
+        }
+        return;  // Evitar que el servidor siga buscando rutas
+    }
+
+
+    //---- Ruta para la búsqueda de productos
     if (req.url.startsWith('/productos?param1=') && req.method === 'GET') {
         const query = new URLSearchParams(req.url.split('?')[1]);
         const searchTerm = query.get('param1').toLowerCase(); // Termino de búsqueda
@@ -125,89 +166,91 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    const paginaHTML = `
-       <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>${producto.nombre}</title>
-    <link rel="stylesheet" href="/Style/producto.css">
-</head>
-<body>
-    <!-- Encabezado con carrito -->
-    <header>
-        <h1><span>The Spike Shop</span></h1>
-        <div class="carrito-container">
-            <a href="#">
-                <img src="/Images/carrito.png" alt="Carrito de la compra" class="carrito-icono">
-                <span class="contador-carrito">0</span>
-            </a>
-        </div>
-    </header>
+   const paginaHTML = `
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <title>${producto.nombre}</title>
+            <link rel="stylesheet" href="/Style/producto.css">
+        </head>
+        <body>
+            <!-- Encabezado con carrito -->
+            <header>
+                <h1><span>The Spike Shop</span></h1>
+                <div class="carrito-container">
+                    <a href="#">
+                        <img src="/Images/carrito.png" alt="Carrito de la compra" class="carrito-icono">
+                        <span class="contador-carrito">0</span>
+                    </a>
+                </div>
+            </header>
 
-    <!-- Recuadro superior -->
-    <div class="recuadro-superior"></div>
+            <div class="recuadro-superior"></div>
 
-    <div class="producto-container">
-        <h1 class="producto-nombre">${producto.nombre}</h1>
+            <!-- Contenido del producto -->
+            <div class="producto-container">
+                <h1 class="producto-nombre">${producto.nombre}</h1>
+                <img class="producto-imagen" src="${producto.imagen}" alt="${producto.nombre}" style="width:300px;" />
+                <p class="producto-descripcion">${producto.descripcion}</p>
+                <p><strong>Precio:</strong> ${producto.precio} €</p>
+                <p><strong>Stock disponible:</strong> ${producto.stock}</p>
 
-        <!-- Imagen del producto con clase 'producto-imagen' -->
-        <img class="producto-imagen" src="${producto.imagen}" alt="${producto.nombre}" style="width:300px;" />
-
-        <p class="producto-descripcion">${producto.descripcion}</p>
-        <p><strong>Precio:</strong> ${producto.precio} €</p>
-        <p><strong>Stock disponible:</strong> ${producto.stock}</p>
-
-        <form action="/procesar-pedido" method="POST" onsubmit="return enviarPedido('${producto.nombre}')">
-            <input type="text" name="usuario" placeholder="Nombre de usuario" required>
-            <input type="text" name="direccion" placeholder="Dirección de envío" required>
-            <input type="text" name="tarjeta" placeholder="Número de tarjeta" required>
-            <button type="submit">Confirmar compra</button>
-        </form>
-
-        <script>
-            function enviarPedido(nombreProducto) {
-                const form = event.target;
-                const datos = {
-                    usuario: form.usuario.value,
-                    direccion: form.direccion.value,
-                    tarjeta: form.tarjeta.value,
-                    productos: [nombreProducto]
-                };
-
-                fetch('/procesar-pedido', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(datos)
-                }).then(res => res.json())
-                .then(data => {
-                    if (data.exito) {
-                        alert('Compra realizada con éxito.');
-                    } else {
-                        alert('Error: ' + data.error);
-                    }
-                });
-                return false;
-            }
-        </script>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 The Spike Shop - Todos los derechos reservados.</p>
-            <div class="footer-links">
-                <a href="https://www.riotgames.com/es/privacy-notice-ES">Política de privacidad</a> | 
-                <a href="https://www.riotgames.com/es/terms-of-service-ES">Términos y condiciones</a> | 
-                <a href="https://x.com/VALORANTes">Contacto</a>
+                <button class="añadir-carrito" onclick="añadirAlCarrito()">Añadir al carrito</button>
             </div>
-        </div>
-    </footer>
-</body>
-</html>
+
+            <footer>
+                <div class="footer-content">
+                    <p>&copy; 2025 The Spike Shop - Todos los derechos reservados.</p>
+                    <div class="footer-links">
+                        <a href="https://www.riotgames.com/es/privacy-notice-ES">Política de privacidad</a> | 
+                        <a href="https://www.riotgames.com/es/terms-of-service-ES">Términos y condiciones</a> | 
+                        <a href="https://x.com/VALORANTes">Contacto</a>
+                    </div>
+                </div>
+            </footer>
+
+            <script>
+                // Cargar contador inicial del carrito
+                actualizarContadorCarrito();
+
+                function añadirAlCarrito() {
+                    const producto = {
+                        nombre: "${producto.nombre}",
+                        precio: ${producto.precio},
+                        imagen: "${producto.imagen}",
+                        cantidad: 1
+                    };
+
+                    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+                    // Verificar si ya existe
+                    const existente = carrito.find(p => p.nombre === producto.nombre);
+                    if (existente) {
+                        existente.cantidad += 1;
+                    } else {
+                        carrito.push(producto);
+                    }
+
+                    localStorage.setItem('carrito', JSON.stringify(carrito));
+                    actualizarContadorCarrito();
+                }
+
+                function actualizarContadorCarrito() {
+                    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                    const totalItems = carrito.reduce((suma, p) => suma + p.cantidad, 0);
+                    document.querySelector('.contador-carrito').textContent = totalItems;
+                }
+            </script>
+        </body>
+        </html>
+        `;
 
 
 
-    `;
+
+
+    
 
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(paginaHTML);

@@ -16,11 +16,16 @@
             <img src="../Images/carrito.png" alt="Carrito de la compra" class="carrito-icono">
             <span class="contador-carrito">0</span>
         </a>
-    </div>
+        </div>
+        <div class="login-container">
+            <button id="signInBtn">Sign In</button>
+        </div>
+
+
     </header>
     
-
     <main>
+
 
         <section class="barra-busqueda">
             <input type="text" id="caja-busqueda" placeholder="Buscar productos...">
@@ -96,6 +101,62 @@
         </div>
     </footer>
     
+    <!-- Ventana Modal para Login -->
+    <div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm">
+        <input type="text" id="usernameInput" placeholder="Nombre de usuario" required />
+        <button type="submit">Entrar</button>
+        </form>
+        <p id="loginError" class="error-message"></p>
+    </div>
+    </div>
+
+
+
+    <script>
+  const modal = document.getElementById("loginModal");
+  const signInButton = document.getElementById("signInBtn"); // Asegúrate de que el botón tiene este id
+  const closeBtn = document.querySelector(".close");
+  const loginForm = document.getElementById("loginForm");
+  const usernameInput = document.getElementById("usernameInput");
+  const loginError = document.getElementById("loginError");
+
+  signInButton.onclick = () => {
+    modal.style.display = "block";
+    loginError.textContent = "";
+  };
+
+  closeBtn.onclick = () => {
+    modal.style.display = "none";
+  };
+
+  window.onclick = (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  loginForm.onsubmit = (event) => {
+    event.preventDefault();
+    const username = usernameInput.value.trim();
+
+    fetch('/usuarios') // Ruta en tienda.js
+      .then(response => response.json())
+      .then(data => {
+        const usuarioValido = data.usuarios.find(user => user.nombre === username);
+        if (usuarioValido) {
+          modal.style.display = "none";
+          alert("Conectado como: " + username);
+          // Aquí puedes actualizar la interfaz para mostrar que está logueado
+        } else {
+          loginError.textContent = "Usuario no encontrado.";
+        }
+      });
+  };
+</script>
 
 
 </body>
