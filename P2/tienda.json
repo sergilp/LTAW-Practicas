@@ -13,64 +13,89 @@
       "correo": "sergypul@email.com"
     }
   ],
-
-   "productos": [
+  "productos": [
     {
       "nombre": "Vandal Prime",
       "descripcion": "La Vandal Prime combina un diseño futurista con acabados brillantes que destacan en el campo de batalla. Ideal para quienes buscan estilo y poder en cada disparo.",
-      "precio": 50.00,
-      "stock": 5
+      "precio": 50,
+      "imagen": "/Images/Vandal_Prime.png",
+      "stock": 4
     },
     {
       "nombre": "Vandal Kuronami",
       "descripcion": "La Vandal Kuronami cuenta con un diseño inspirado en la estética japonesa, combinando tonos oscuros con detalles de color vibrante, ideal para los jugadores que buscan algo único y futurista.",
       "precio": 42.99,
+      "imagen": "/Images/Vandal_Kuronami.png",
       "stock": 5
     },
     {
       "nombre": "Vandal Origin",
       "descripcion": "La Vandal Origin es una skin que rinde homenaje a los orígenes del juego, con detalles sobrios y un estilo elegante que destaca en cada partida.",
       "precio": 38.99,
+      "imagen": "/Images/Vandal_Origin.png",
       "stock": 10
     },
     {
       "nombre": "Vandal Elderflame",
       "descripcion": "La Vandal Elderflame ofrece un diseño impresionante inspirado en los dragones, con detalles que destacan en el campo de batalla. Una elección perfecta para los jugadores que buscan una estética épica.",
       "precio": 19.99,
+      "imagen": "/Images/Vandal_Elderflame.png",
       "stock": 10
     },
     {
       "nombre": "Vandal Primordium",
       "descripcion": "La Vandal Primordium es una skin que evoca la esencia de los primeros días del juego, con un diseño imponente que refleja el poder primordial.",
       "precio": 24.99,
-      "stock": 7
+      "imagen": "/Images/Vandal_Primordium.png",
+      "stock": 8
     },
     {
       "nombre": "Vandal Glitchpop",
       "descripcion": "La Vandal Glitchpop se destaca por sus colores brillantes y su diseño futurista. Perfecta para quienes desean un estilo único y lleno de energía en el campo de batalla.",
       "precio": 33.99,
+      "imagen": "/Images/Vandal_Glitchpop.png",
       "stock": 10
     },
     {
       "nombre": "Vandal Reaver",
       "descripcion": "La Vandal Reaver presenta un diseño oscuro y místico, con detalles que reflejan poder y agresividad. Perfecta para quienes buscan una skin con temática sobrenatural.",
       "precio": 14.99,
+      "imagen": "/Images/Vandal_Reaver.png",
       "stock": 20
     },
     {
       "nombre": "Vandal Evori",
       "descripcion": "La Vandal Evori destaca por su elegante diseño y su acabado único. Perfecta para quienes buscan precisión y estilo en cada disparo.",
       "precio": 29.99,
+      "imagen": "/Images/Vandal_Evori.png",
       "stock": 10
     }
   ],
-
   "pedidos": [
     {
       "usuario": "Sergypul",
       "direccion_envio": "Calle Ave del Paraíso 3, Madrid",
       "numero_tarjeta": "1234 5678 9012 3456",
-      "productos_comprados": ["Vandal Prime", "Vandal Kuronami"]
+      "productos_comprados": [
+        "Vandal Prime",
+        "Vandal Kuronami"
+      ]
+    },
+    {
+      "usuario": "Sergypul",
+      "direccion": "Calle Ave del Paraíso 3, Madrid",
+      "tarjeta": "      \"numero_tarjeta\": \"1234 5678 9012 3456\",",
+      "productos": [
+        "Vandal Prime"
+      ]
+    },
+    {
+      "usuario": "Sergypul",
+      "direccion": "Mi casa 4",
+      "tarjeta": "1234567812345678",
+      "productos": [
+        "Vandal Origin"
+      ]
     }
   ]
 }

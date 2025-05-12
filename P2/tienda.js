@@ -27,14 +27,14 @@ const server = http.createServer((req, res) => {
         const query = new URLSearchParams(req.url.split('?')[1]);
         const searchTerm = query.get('param1').toLowerCase(); // Termino de búsqueda
         
-        // Filtrar productos que coincidan con el término de búsqueda
+        //-- Filtrar productos que coincidan con el término de búsqueda
         const productosFiltrados = tiendaDB.productos.filter(prod =>
             prod.nombre.toLowerCase().includes(searchTerm)
         );
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(productosFiltrados)); // Enviar productos filtrados como JSON
-        return; // Detener la ejecución aquí ya que la respuesta se envió
+        return; //-- Detener la ejecución aquí ya que la respuesta se envió
     }
 
     if (req.method === 'POST' && req.url === '/procesar-pedido') {
@@ -75,13 +75,13 @@ const server = http.createServer((req, res) => {
                     return;
                 }
 
-                // Restar 1 del stock por producto comprado
+                //-- Restar 1 del stock por producto comprado
                 productos.forEach(nombreProducto => {
                     const p = tiendaDB.productos.find(p => p.nombre === nombreProducto);
                     if (p) p.stock -= 1;
                 });
 
-                // Añadir pedido a la base de datos
+                //-- Añadir pedido a la base de datos
                 if (!tiendaDB.pedidos) tiendaDB.pedidos = [];
 
                 tiendaDB.pedidos.push({
@@ -109,8 +109,112 @@ const server = http.createServer((req, res) => {
             }
         });
 
-        return; // Importante: no seguir procesando como archivo estático
+        return; //-- Importante: no seguir procesando como archivo estático
     }
+
+
+    if (req.url.startsWith('/producto?nombre=') && req.method === 'GET') {
+    const query = new URLSearchParams(req.url.split('?')[1]);
+    const nombreProducto = decodeURIComponent(query.get('nombre'));
+
+    const producto = tiendaDB.productos.find(p => p.nombre === nombreProducto);
+
+    if (!producto) {
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.end(pagina_error);
+        return;
+    }
+
+    const paginaHTML = `
+       <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>${producto.nombre}</title>
+    <link rel="stylesheet" href="/Style/producto.css">
+</head>
+<body>
+    <!-- Encabezado con carrito -->
+    <header>
+        <h1><span>The Spike Shop</span></h1>
+        <div class="carrito-container">
+            <a href="#">
+                <img src="/Images/carrito.png" alt="Carrito de la compra" class="carrito-icono">
+                <span class="contador-carrito">0</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Recuadro superior -->
+    <div class="recuadro-superior"></div>
+
+    <div class="producto-container">
+        <h1 class="producto-nombre">${producto.nombre}</h1>
+
+        <!-- Imagen del producto con clase 'producto-imagen' -->
+        <img class="producto-imagen" src="${producto.imagen}" alt="${producto.nombre}" style="width:300px;" />
+
+        <p class="producto-descripcion">${producto.descripcion}</p>
+        <p><strong>Precio:</strong> ${producto.precio} €</p>
+        <p><strong>Stock disponible:</strong> ${producto.stock}</p>
+
+        <form action="/procesar-pedido" method="POST" onsubmit="return enviarPedido('${producto.nombre}')">
+            <input type="text" name="usuario" placeholder="Nombre de usuario" required>
+            <input type="text" name="direccion" placeholder="Dirección de envío" required>
+            <input type="text" name="tarjeta" placeholder="Número de tarjeta" required>
+            <button type="submit">Confirmar compra</button>
+        </form>
+
+        <script>
+            function enviarPedido(nombreProducto) {
+                const form = event.target;
+                const datos = {
+                    usuario: form.usuario.value,
+                    direccion: form.direccion.value,
+                    tarjeta: form.tarjeta.value,
+                    productos: [nombreProducto]
+                };
+
+                fetch('/procesar-pedido', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datos)
+                }).then(res => res.json())
+                .then(data => {
+                    if (data.exito) {
+                        alert('Compra realizada con éxito.');
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                });
+                return false;
+            }
+        </script>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 The Spike Shop - Todos los derechos reservados.</p>
+            <div class="footer-links">
+                <a href="https://www.riotgames.com/es/privacy-notice-ES">Política de privacidad</a> | 
+                <a href="https://www.riotgames.com/es/terms-of-service-ES">Términos y condiciones</a> | 
+                <a href="https://x.com/VALORANTes">Contacto</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
+    `;
+
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(paginaHTML);
+    return;
+}
+
+
 
     //-- Manejo de archivos estáticos
     let content_type;

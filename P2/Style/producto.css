@@ -1,0 +1,177 @@
+/* Fondo general */
+body {
+    background-image: url('../Images/fondo2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: "Times New Roman", Times, serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Estilo para el encabezado */
+header {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* Título "The Spike Shop" */
+header h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+header h1 span {
+    color: #ff4757;
+}
+
+/* Contenedor del carrito */
+.carrito-container {
+    position: relative;
+    background-color: #ff4757;
+    padding: 8px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.carrito-icono {
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+}
+
+.contador-carrito {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #ff4757;
+    color: white;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+
+/* Contenedor del producto */
+.producto-container {
+    max-width: 800px;
+    margin: 100px auto 0;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el nombre del producto */
+.producto-nombre {
+    text-align: center;
+    font-size: 36px;
+    color: #ff4c4c;
+    margin-bottom: 20px;
+}
+
+/* Imagen del producto */
+.producto-imagen {
+    display: block;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 300px;
+    border-radius: 10px;
+}
+
+/* Descripción del producto */
+.producto-descripcion {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Detalles como precio y stock */
+p {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Título de las secciones como Precio y Stock */
+strong {
+    font-weight: bold;
+    color: #ff4c4c;
+}
+
+/* Formulario de compra */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para los inputs del formulario */
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Estilo para el botón de compra */
+button {
+    background-color: #ff4c4c;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+/* Efecto hover en el botón */
+button:hover {
+    background-color: #e84343;
+}
+
+/* Estilo para el pie de página */
+footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+

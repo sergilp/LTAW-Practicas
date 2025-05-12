@@ -9,6 +9,40 @@ body {
     padding: 0;
 }
 
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: relative; /* Importante para el posicionamiento del carrito */
+}
+
+.carrito-container {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+.carrito-icono {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(2px 2px 4px black);
+    cursor: pointer;
+}
+
+.contador-carrito {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #ff4c4c;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
 /* Barra de búsqueda */
 .barra-busqueda {
     text-align: center; /* Centra el contenido de la barra */
@@ -43,6 +77,28 @@ body {
 
 .barra-busqueda button:hover {
     background-color: #e84343;
+}
+
+
+/* Menú desplegable de sugerencias */
+.sugerencias {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 200px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+}
+
+.sugerencias div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.sugerencias div:hover {
+    background-color: #f0f0f0;
 }
 
 
