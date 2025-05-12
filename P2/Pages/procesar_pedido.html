@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Procesar Pedido</title>
+</head>
+<body>
+    <h1>Procesar Pedido</h1>
+
+    <form id="pedidoForm">
+        <label>Nombre de usuario:
+            <input type="text" name="usuario" required>
+        </label><br>
+
+        <label>Dirección de envío:
+            <input type="text" name="direccion" required>
+        </label><br>
+
+        <label>Número de tarjeta:
+            <input type="text" name="tarjeta" required pattern="\d{16}" maxlength="16" placeholder="16 dígitos">
+        </label><br>
+
+        <h3>Productos en el carrito:</h3>
+        <ul id="listaCarrito"></ul>
+
+        <button type="submit">Confirmar Pedido</button>
+    </form>
+
+    <p id="mensaje"></p>
+
+    <script>
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const listaCarrito = document.getElementById('listaCarrito');
+        const mensaje = document.getElementById('mensaje');
+
+        if (carrito.length === 0) {
+            listaCarrito.innerHTML = '<li>Tu carrito está vacío</li>';
+        } else {
+            carrito.forEach(producto => {
+                const li = document.createElement('li');
+                li.textContent = producto;
+                listaCarrito.appendChild(li);
+            });
+        }
+
+        document.getElementById('pedidoForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const datosPedido = {
+                usuario: this.usuario.value.trim(),
+                direccion: this.direccion.value.trim(),
+                tarjeta: this.tarjeta.value.trim(),
+                productos: carrito
+            };
+
+            fetch('/procesar-pedido', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datosPedido)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.exito) {
+                    mensaje.textContent = 'Pedido realizado con éxito.';
+                    localStorage.removeItem('carrito');
+                    listaCarrito.innerHTML = '';
+                } else {
+                    mensaje.textContent = 'Error: ' + data.error;
+                }
+            })
+            .catch(err => {
+                mensaje.textContent = 'Error al enviar el pedido.';
+            });
+        });
+    </script>
+</body>
+</html>

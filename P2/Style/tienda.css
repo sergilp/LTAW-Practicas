@@ -1,0 +1,158 @@
+/* Fondo general */
+body {
+    background-image: url('../Images/fondo1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: "Times New Roman", Times, serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Barra de búsqueda */
+.barra-busqueda {
+    text-align: center; /* Centra el contenido de la barra */
+    margin: 20px 0; /* Margen superior e inferior para separar de otros elementos */
+}
+
+.barra-busqueda input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 5px;
+    border: 2px solid #ff4c4c;
+    font-size: 16px;
+    outline: none;
+    margin-right: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.barra-busqueda input:focus {
+    border-color: #e84343;
+}
+
+.barra-busqueda button {
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.barra-busqueda button:hover {
+    background-color: #e84343;
+}
+
+
+
+
+/* Contenedor principal de productos */
+.productos {
+    display: flex;
+    flex-wrap: wrap; /* Por si hay muchos productos, que bajen en otra fila */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    text-align: center;
+    padding: 50px 0;
+}
+
+.producto {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    border-radius: 10px;
+    margin: 20px;
+    padding: 20px;
+    width: 200px;
+    transition: transform 0.3s;
+}
+
+/* Imagen del producto */
+.producto img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Título del producto */
+.producto h3 {
+    margin: 10px 0;
+}
+
+/* Botón de compra */
+.producto button {
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Botón al pasar el ratón */
+.producto button:hover {
+    background-color: #e84343;
+}
+
+/* Efecto al pasar el ratón por cada producto */
+.producto:hover {
+    transform: translateY(-10px);
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+header h1 span {
+    color: white;
+    font-size: 48px;
+}
+
+/* Estilo para los enlaces (que parecen botones) */
+a {
+    display: inline-block;
+    text-align: center;
+    background-color: #ff4c4c;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Efecto de hover en los enlaces */
+a:hover {
+    background-color: #e84343;
+    transform: translateY(-5px);
+}
+
+footer {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+

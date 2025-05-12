@@ -1,15 +1,12 @@
-//-- Importar módulos
-const http = require('http');   //-- Módulo para crear servidores HTTP
-const fs = require('fs');       //-- Módulo para leer los archivos
-const path = require('path');   //-- Módulo para rutas de archivos
-const tiendaDB = require('./tienda.json');  //-- Carga los datos JSON
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
-//-- Puerto a utilizar 
+let tiendaDB = require('./tienda.json');
+
 const PORT = 8001;
+const pagina_error = fs.readFileSync('./Pages/pagina_error.html', 'utf8');
 
-const pagina_error = fs.readFileSync('./Pages/pagina_error.html','utf8');
-
-//-- Función para leer archivos
 function leerFichero(fichero, callback) {
     fs.readFile(fichero, (err, data) => {
         if (err) {
@@ -18,74 +15,127 @@ function leerFichero(fichero, callback) {
         } else {
             console.log(`Lectura correcta de ${fichero}`);
             callback(null, data);
-                }
+        }
     });
 }
 
 const server = http.createServer((req, res) => {
     console.log('Petición recibida:', req.url);
 
+    // ---- Ruta para la búsqueda de productos
+    if (req.url.startsWith('/productos?param1=') && req.method === 'GET') {
+        const query = new URLSearchParams(req.url.split('?')[1]);
+        const searchTerm = query.get('param1').toLowerCase(); // Termino de búsqueda
+        
+        // Filtrar productos que coincidan con el término de búsqueda
+        const productosFiltrados = tiendaDB.productos.filter(prod =>
+            prod.nombre.toLowerCase().includes(searchTerm)
+        );
 
-    ///-- Manejo del login
-    if (req.method === 'POST' && req.url === '/login') {
-    let cuerpo = '';
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(productosFiltrados)); // Enviar productos filtrados como JSON
+        return; // Detener la ejecución aquí ya que la respuesta se envió
+    }
 
-    req.on('data', chunk => {
-        cuerpo += chunk.toString(); //-- Convierte el buffer en string
-    });
+    if (req.method === 'POST' && req.url === '/procesar-pedido') {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
 
-    req.on('end', () => {
-        const datos = new URLSearchParams(cuerpo);
-        const nombre = datos.get('nombre');
-        const password = datos.get('password');
+        req.on('end', () => {
+            try {
+                const pedido = JSON.parse(body);
+                const { usuario, direccion, tarjeta, productos } = pedido;
 
-        const usuario = tiendaDB.usuarios.find(u => u.nombre === nombre && u.password === password);
+                if (!usuario || !direccion || !tarjeta || !productos || !Array.isArray(productos)) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ exito: false, error: 'Datos incompletos.' }));
+                    return;
+                }
 
-        if (usuario) {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/html');
-            res.end(`<h1>Bienvenido, ${usuario.nombre_real}</h1>`);
-        } else {
-            res.statusCode = 401;
-            res.setHeader('Content-Type', 'text/html');
-            res.end('<h1>Credenciales incorrectas</h1><a href="/Pages/login.html">Volver</a>');
-        }
-    });
+                const usuarioExistente = tiendaDB.usuarios.find(u => u.nombre === usuario);
+                if (!usuarioExistente) {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ exito: false, error: 'Usuario no encontrado.' }));
+                    return;
+                }
 
-    return; //-- Importante: salir del handler aquí
-}
+                const productosNoDisponibles = [];
+                for (let nombreProducto of productos) {
+                    const producto = tiendaDB.productos.find(p => p.nombre === nombreProducto);
+                    if (!producto || producto.stock < 1) {
+                        productosNoDisponibles.push(nombreProducto);
+                    }
+                }
 
+                if (productosNoDisponibles.length > 0) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ exito: false, error: `Producto(s) sin stock: ${productosNoDisponibles.join(', ')}` }));
+                    return;
+                }
 
+                // Restar 1 del stock por producto comprado
+                productos.forEach(nombreProducto => {
+                    const p = tiendaDB.productos.find(p => p.nombre === nombreProducto);
+                    if (p) p.stock -= 1;
+                });
+
+                // Añadir pedido a la base de datos
+                if (!tiendaDB.pedidos) tiendaDB.pedidos = [];
+
+                tiendaDB.pedidos.push({
+                    usuario,
+                    direccion,
+                    tarjeta,
+                    productos
+                });
+
+                fs.writeFile('./tienda.json', JSON.stringify(tiendaDB, null, 2), err => {
+                    if (err) {
+                        console.error('Error al guardar pedido:', err);
+                        res.writeHead(500, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ exito: false, error: 'Error al guardar el pedido.' }));
+                    } else {
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ exito: true }));
+                    }
+                });
+
+            } catch (err) {
+                console.error('Error al procesar el pedido:', err);
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ exito: false, error: 'Formato de datos inválido.' }));
+            }
+        });
+
+        return; // Importante: no seguir procesando como archivo estático
+    }
+
+    //-- Manejo de archivos estáticos
     let content_type;
     let recurso;
 
-    //-- Se declara el Content-Type y recurso
-    if (req.url.endsWith('.png')) {             //-- Acceso a archivos PNG
-            content_type = 'image/png';
-            recurso = path.join(__dirname, 'Images', path.basename(req.url));
-
-    } else if (req.url.endsWith('.css')) {      //-- Acceso a los archivos CSS
+    if (req.url.endsWith('.png')) {
+        content_type = 'image/png';
+        recurso = path.join(__dirname, 'Images', path.basename(req.url));
+    } else if (req.url.endsWith('.css')) {
         content_type = 'text/css';
         recurso = path.join(__dirname, 'Style', path.basename(req.url));
-
-    } else if (req.url.endsWith('.html')) {     //-- Acceso a los archivos HTML
+    } else if (req.url.endsWith('.html')) {
         content_type = 'text/html';
         recurso = path.join(__dirname, 'Pages', path.basename(req.url));
-
-    } else if (req.url.endsWith('.js')) {       //-- Acceso a los archivos JS
+    } else if (req.url.endsWith('.js')) {
         content_type = 'application/javascript';
         recurso = path.join(__dirname, 'JS', path.basename(req.url));
-
-    } else if (req.url.endsWith('.jpeg') || req.url.endsWith('.jpg')) {     //-- Acceso a los archivos JPEG o JPG
+    } else if (req.url.endsWith('.jpeg') || req.url.endsWith('.jpg')) {
         content_type = 'image/jpeg';
         recurso = path.join(__dirname, 'Images', path.basename(req.url));
-
     } else if (req.url == '/') {
-        content_type = 'text.html';
+        content_type = 'text/html';
         recurso = path.join(__dirname, 'Pages', 'tienda.html');
-
-    } else {                                    //-- Acceso a cualquier otra ruta
-        content_type = 'text.html';
+    } else {
+        content_type = 'text/html';
         recurso = null;
     }
 
@@ -93,13 +143,11 @@ const server = http.createServer((req, res) => {
         leerFichero(recurso, (err, data) => {
             if (err) {
                 res.statusCode = 404;
-                res.statusMessage = 'Not Found'
                 res.setHeader('Content-Type', 'text/html');
                 res.write(pagina_error);
                 res.end();
             } else {
                 res.statusCode = 200;
-                res.statusMessage = "OK";
                 res.setHeader('Content-Type', content_type);
                 res.write(data);
                 res.end();
@@ -107,7 +155,6 @@ const server = http.createServer((req, res) => {
         });
     } else {
         res.statusCode = 404;
-        res.statusMessage = "Not Found";
         res.setHeader('Content-Type', 'text/html');
         res.write(pagina_error);
         res.end();
