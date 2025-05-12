@@ -246,12 +246,6 @@ const server = http.createServer((req, res) => {
         </html>
         `;
 
-
-
-
-
-    
-
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(paginaHTML);
     return;
