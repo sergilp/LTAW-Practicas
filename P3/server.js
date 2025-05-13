@@ -10,7 +10,7 @@ const PORT = 8080;
 
 //-- Maneja la solicitud de la página principal
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/chat.html');  // Servir el archivo HTML
+  res.sendFile(__dirname + '/index.html');  // Servir el archivo HTML
 });
 
 //-- Servir archivos estáticos como CSS y JS
@@ -22,7 +22,7 @@ let users = [];
 io.on('connection', (socket) => {
   console.log('Nuevo usuario conectado');
   
-  //--Enviar mensaje de bienvenida al usuario
+  //-- Enviar mensaje de bienvenida al usuario
   socket.emit('welcome', '¡Bienvenido al chat!');
 
   //-- Anunciar la llegada de un nuevo usuario a todos
@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
   //-- Manejar los mensajes
   socket.on('message', (msg) => {
     if (msg.startsWith('/')) {
-      // Es un comando, procesarlo
+      //-- Es un comando, procesarlo
       handleCommand(msg, socket);
     } else {
       //-- Enviar el mensaje a todos los usuarios

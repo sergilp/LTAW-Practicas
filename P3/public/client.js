@@ -37,17 +37,18 @@ sendButton.onclick = () => {
   }
 };
 
-//--Función para mostrar el mensaje en la interfaz
-function displayMessage(msg, color) {
-  const p = document.createElement('p');
-  p.textContent = msg;
-  p.style.color = color;
-  messagesDiv.appendChild(p);
-}
-
 //-- También enviar mensaje al presionar Enter
 messageInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
     sendButton.click();
   }
 });
+
+
+//-- Función para mostrar el mensaje en la interfaz
+function displayMessage(msg, color) {
+  const p = document.createElement('p');
+  p.textContent = msg;
+  p.style.color = color;
+  messagesDiv.appendChild(p);
+}
