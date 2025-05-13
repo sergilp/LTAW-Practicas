@@ -2,35 +2,22 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Panel de administración - Chat</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            padding: 1rem;
-        }
-        #info p, #log div {
-            margin: 0.2rem 0;
-        }
-        #log {
-            margin-top: 1rem;
-            max-height: 200px;
-            overflow-y: auto;
-            background: #f0f0f0;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-        }
-    </style>
+    <title>CryptoAdmin - Chat</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h2>🛠 Panel de administración</h2>
+    <h2>💹 CryptoChat - Panel de Administración</h2>
+
     <div id="info">
         <p><strong>Node:</strong> <span id="node-version"></span></p>
         <p><strong>Electron:</strong> <span id="electron-version"></span></p>
         <p><strong>Chrome:</strong> <span id="chrome-version"></span></p>
         <p><strong>URL:</strong> <span id="server-url"></span></p>
     </div>
-    <button id="test-btn">Enviar mensaje de prueba</button>
-    <h3>📨 Mensajes del servidor:</h3>
+
+    <button id="test-btn">🚀 Enviar mensaje de prueba</button>
+
+    <h3>📨 Mensajes recibidos en el servidor:</h3>
     <div id="log"></div>
 
     <script>

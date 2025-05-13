@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    color: #e0ffe0;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc88;
+}
+
+#info-panel, #log-panel {
+    margin: 2rem auto;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 800px;
+    background: #121212;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00ffcc55;
+}
+
+#info-panel ul {
+    list-style: none;
+    padding: 0;
+}
+
+#info-panel li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #2a2a2a;
+    color: #b2ffb2;
+    display: flex;
+    justify-content: space-between;
+}
+
+#log-panel h3 {
+    margin-bottom: 0.5rem;
+    color: #00ccff;
+    border-bottom: 1px solid #00ccff66;
+    padding-bottom: 0.5rem;
+}
+
+#messages-log {
+    max-height: 300px;
+    overflow-y: auto;
+    background: #181818;
+    padding: 1rem;
+    border-radius: 5px;
+    font-family: monospace;
+    color: #00ff99;
+    border: 1px solid #00ffcc22;
+}
+
+button {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background: #00ffcc;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 0 10px #00ffcc88;
+}
+
+button:hover {
+    background: #00cc99;
+    transform: scale(1.05);
+}
+
+#url {
+    font-weight: bold;
+    color: #00ff99;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: #00ffcc88;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+    background: #121212;
+}
