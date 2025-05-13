@@ -1,0 +1,65 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+#messages {
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 300px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+}
+
+input {
+    width: 80%;
+    padding: 5px;
+}
+
+button {
+    width: 18%;
+    padding: 5px;
+}
+
+.system {
+    color: #999;
+    font-style: italic;
+}
+
+.own {
+    color: green;
+    font-weight: bold;
+}
+
+.other {
+    color: blue;
+}
+
+
+#chat-container {
+    display: flex;
+    gap: 20px;
+}
+
+#messages-panel {
+    flex: 3;
+}
+
+#users-panel {
+    flex: 1;
+    border-left: 1px solid #ccc;
+    padding-left: 10px;
+    background: #f3f3f3;
+}
+
+#user-list {
+    list-style: none;
+    padding: 0;
+}
+
+#typing {
+    font-style: italic;
+    color: #888;
+    margin: 5px 0;
+}
