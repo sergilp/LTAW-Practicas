@@ -10,7 +10,7 @@ const PORT = 8080;
 
 //-- Maneja la solicitud de la página principal
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');  // Servir el archivo HTML
+  res.sendFile(__dirname + '/chat.html');  // Servir el archivo HTML
 });
 
 //-- Servir archivos estáticos como CSS y JS
@@ -22,22 +22,29 @@ let users = [];
 io.on('connection', (socket) => {
   console.log('Nuevo usuario conectado');
   
-  //-- Enviar mensaje de bienvenida al usuario
-  socket.emit('welcome', '¡Bienvenido al chat!');
+  //-- Solicitar el nombre del usuario
+  socket.emit('request-username'); // Enviar un mensaje solicitando el nombre
 
-  //-- Anunciar la llegada de un nuevo usuario a todos
-  socket.broadcast.emit('new-user', 'Un nuevo usuario se ha conectado.');
+  //-- Guardar el nombre del usuario cuando lo reciba
+  socket.on('set-username', (username) => {
+    // Guardar el nombre en el objeto socket
+    socket.username = username;
 
-  //-- Añadir al usuario a la lista
-  users.push(socket.id);
+    //-- Enviar mensaje de bienvenida al usuario con su nombre
+    socket.emit('welcome', `¡Bienvenido al chat, ${username}!`);
+    
+    //-- Anunciar la llegada de un nuevo usuario con su nombre
+    socket.broadcast.emit('new-user', `${username} se ha conectado.`);
 
-  //-- Manejar el evento de desconexión
-  socket.on('disconnect', () => {
-    console.log('Usuario desconectado');
-    //-- Anunciar la salida del usuario
-    socket.broadcast.emit('user-left', 'Un usuario ha salido.');
-    //-- Eliminar de la lista de usuarios
-    users = users.filter(id => id !== socket.id);
+    //-- Añadir al usuario a la lista
+    users.push({ id: socket.id, username: username });
+
+    //-- Manejar la desconexión
+    socket.on('disconnect', () => {
+      console.log(`${username} desconectado`);
+      socket.broadcast.emit('user-left', `${username} ha salido.`);
+      users = users.filter(user => user.id !== socket.id);
+    });
   });
 
   //-- Manejar los mensajes
@@ -46,12 +53,12 @@ io.on('connection', (socket) => {
       //-- Es un comando, procesarlo
       handleCommand(msg, socket);
     } else {
-      //-- Enviar el mensaje a todos los usuarios
-      io.emit('message', msg);
+      //-- Enviar el mensaje con el nombre de usuario
+      io.emit('message', `${socket.username}: ${msg}`);
     }
   });
-  
 });
+
 
 //-- Función para manejar los comandos
 function handleCommand(command, socket) {
