@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Mejorado</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <h2>💬 CryptoChat</h2>
+    <div id="chat-container">
+        <div id="messages-panel">
+            <div id="messages"></div>
+            <input id="input" autocomplete="off" placeholder="Escribe un mensaje..." />
+            <button id="send">Enviar</button>
+        </div>
+        <div id="users-panel">
+            <h4>Conectados:</h4>
+            <ul id="user-list"></ul>
+        </div>
+    </div>
+
+    <audio id="notifSound" src="sound.mp3" preload="auto"></audio>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>

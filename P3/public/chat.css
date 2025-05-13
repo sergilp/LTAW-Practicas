@@ -1,65 +1,138 @@
+/* Fondo general */
 body {
-    font-family: sans-serif;
-    margin: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    color: #e0ffe0;
+    margin: 0;
+    padding: 0;
 }
 
+/* Título del chat */
+h2 {
+    text-align: center;
+    padding: 1rem;
+    color: #00ffcc;
+    text-shadow: 0 0 5px #00ffcc;
+}
+
+/* Contenedor principal */
+#chat-container {
+    display: flex;
+    gap: 20px;
+    padding: 1rem;
+}
+
+/* Panel de mensajes */
+#messages-panel {
+    flex: 3;
+    background: #121212;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 0 10px #00ffcc33;
+}
+
+/* Lista de mensajes */
 #messages {
-    border: 1px solid #ccc;
-    padding: 10px;
-    height: 300px;
-    overflow-y: scroll;
-    margin-bottom: 10px;
-    background: #f9f9f9;
+    height: 400px;
+    overflow-y: auto;
+    margin-bottom: 0.5rem;
+    padding-right: 10px;
 }
 
-input {
-    width: 80%;
-    padding: 5px;
+#messages div {
+    padding: 0.5rem;
+    margin-bottom: 0.3rem;
+    border-radius: 5px;
+    background: #1c1c1c;
 }
 
-button {
-    width: 18%;
-    padding: 5px;
-}
-
+/* Tipos de mensajes */
 .system {
-    color: #999;
+    color: #ffaa00;
     font-style: italic;
 }
 
 .own {
-    color: green;
-    font-weight: bold;
+    background: #004d4d;
+    border-left: 3px solid #00ffcc;
 }
 
 .other {
-    color: blue;
+    background: #222222;
+    border-left: 3px solid #ffaa00;
 }
 
-
-#chat-container {
-    display: flex;
-    gap: 20px;
+/* Input y botón */
+#input {
+    width: 80%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    background: #262626;
+    color: #00ffcc;
+    font-size: 1rem;
 }
 
-#messages-panel {
-    flex: 3;
+#send {
+    padding: 0.5rem 1rem;
+    margin-left: 10px;
+    background: #00ffcc;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
+#send:hover {
+    background: #00cc99;
+}
+
+/* Indicador de escritura */
+#typing {
+    font-style: italic;
+    color: #00ccff;
+}
+
+/* Panel lateral de usuarios */
 #users-panel {
     flex: 1;
-    border-left: 1px solid #ccc;
-    padding-left: 10px;
-    background: #f3f3f3;
+    background: #181818;
+    border-left: 2px solid #00ffcc33;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 0 10px #00ffcc33;
+}
+
+#users-panel h4 {
+    margin-top: 0;
+    color: #00ffcc;
+    border-bottom: 1px solid #00ffcc66;
+    padding-bottom: 0.5rem;
 }
 
 #user-list {
     list-style: none;
-    padding: 0;
+    padding-left: 0;
 }
 
-#typing {
-    font-style: italic;
-    color: #888;
-    margin: 5px 0;
+#user-list li {
+    padding: 0.3rem 0;
+    border-bottom: 1px solid #2a2a2a;
+    color: #b2ffb2;
+}
+
+/* Scrollbar personalizada */
+#messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+#messages::-webkit-scrollbar-thumb {
+    background-color: #00ffcc88;
+    border-radius: 4px;
+}
+
+#messages::-webkit-scrollbar-track {
+    background: #121212;
 }
