@@ -1,28 +1,30 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
+const EventEmitter = require('events');
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+const emitter = new EventEmitter();
 
 app.use(express.static('public'));
 
 let usersConnected = 0;
 let nicknames = {};
 
-const typingUsers = new Set();
+server.listen(8080, () => {
+    console.log('Servidor en http://localhost:8080');
+});
 
 io.on('connection', socket => {
     usersConnected++;
 
     socket.on('setNickname', nickname => {
         nicknames[socket.id] = nickname || 'Usuario';
-
         socket.emit('message', { user: 'Jefesito', text: `👋 ¡Bienvenido, ${nickname}!` });
         socket.broadcast.emit('message', { user: 'Jefesito', text: `🔔 ${nickname} se ha unido al chat.` });
-
-        io.emit('userList', Object.values(nicknames)); 
+        io.emit('userList', Object.values(nicknames));
     });
 
     socket.on('chatMessage', msg => {
@@ -48,11 +50,12 @@ io.on('connection', socket => {
             }
             socket.emit('message', { user: 'Jefesito', text: response });
         } else {
-            io.emit('message', { user: nickname, text: msg });
+            const fullMsg = { user: nickname, text: msg };
+            io.emit('message', fullMsg);
+            emitter.emit('message', fullMsg);
         }
     });
 
-    
     socket.on('typing', () => {
         const nickname = nicknames[socket.id];
         socket.broadcast.emit('typing', nickname);
@@ -66,16 +69,18 @@ io.on('connection', socket => {
         const nickname = nicknames[socket.id] || 'Usuario';
         delete nicknames[socket.id];
         usersConnected--;
-
         io.emit('message', { user: 'Jefesito', text: `👋 ${nickname} se ha desconectado.` });
-        io.emit('userList', Object.values(nicknames)); 
+        io.emit('userList', Object.values(nicknames));
     });
 });
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/chat.html');
-});
+// Exporta función de emitir mensajes desde el proceso principal
+function broadcastTestMessage() {
+    io.emit('message', { user: 'Jefesito', text: '📢 Este es un mensaje de prueba enviado desde la interfaz de administración.' });
+}
 
-server.listen(8080, () => {
-    console.log('Servidor en http://localhost:8080');
-});
+function onMessage(callback) {
+    emitter.on('message', callback);
+}
+
+module.exports = { broadcastTestMessage, onMessage };

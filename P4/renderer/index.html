@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de administración - Chat</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 1rem;
+        }
+        #info p, #log div {
+            margin: 0.2rem 0;
+        }
+        #log {
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f0f0f0;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h2>🛠 Panel de administración</h2>
+    <div id="info">
+        <p><strong>Node:</strong> <span id="node-version"></span></p>
+        <p><strong>Electron:</strong> <span id="electron-version"></span></p>
+        <p><strong>Chrome:</strong> <span id="chrome-version"></span></p>
+        <p><strong>URL:</strong> <span id="server-url"></span></p>
+    </div>
+    <button id="test-btn">Enviar mensaje de prueba</button>
+    <h3>📨 Mensajes del servidor:</h3>
+    <div id="log"></div>
+
+    <script>
+        window.electronAPI.onInfo((info) => {
+            document.getElementById('node-version').textContent = info.node;
+            document.getElementById('electron-version').textContent = info.electron;
+            document.getElementById('chrome-version').textContent = info.chrome;
+            document.getElementById('server-url').textContent = `http://${info.ip}:8080/chat.html`;
+        });
+
+        window.electronAPI.onServerMessage(msg => {
+            const div = document.createElement('div');
+            div.textContent = `${msg.user}: ${msg.text}`;
+            document.getElementById('log').appendChild(div);
+        });
+
+        document.getElementById('test-btn').addEventListener('click', () => {
+            window.electronAPI.sendTestMessage();
+        });
+    </script>
+</body>
+</html>
