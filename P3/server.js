@@ -77,5 +77,5 @@ app.get('/', (req, res) => {
 });
 
 server.listen(8080, () => {
-    console.log('Servidor en http://localhost:8080');
+    console.log('Servidor escuchando en http://localhost:8080');
 });
